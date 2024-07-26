@@ -1,6 +1,7 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import s from "./Layout.module.css";
 import { Button } from "../../components/Button/Button";
+import cn from "classnames";
 export function Layout() {
   return (
     <div className={s["layout"]}>
@@ -13,20 +14,30 @@ export function Layout() {
         <div className={s["menu"]}>
           <div className={s["menuConteyner"]}>
             <img src="/menuo.svg" />
-            <Link to="/" className={s["link"]}>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                cn(s["link"], { [s.active]: isActive })
+              }
+            >
               Меню
-            </Link>
+            </NavLink>
           </div>
           <div className={s["menuConteyner"]}>
             <img src="/carto.svg" className={s["cartImg"]} />
-            <Link to="/cart" className={s["link"]}>
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                cn(s["link"], { [s.active]: isActive })
+              }
+            >
               Карточка
-            </Link>
+            </NavLink>
           </div>
         </div>
         <Button className={s["exit"]}>Выход</Button>
       </div>
-      <div>
+      <div className={s.content}>
         <Outlet />
       </div>
     </div>
