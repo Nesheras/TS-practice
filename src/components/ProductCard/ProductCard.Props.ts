@@ -1,6 +1,6 @@
 export interface ProductCardProps {
-  title: string;
-  description: string;
+  name: string;
+  ingredients: [];
   price: number;
   rating: number;
   id: number;

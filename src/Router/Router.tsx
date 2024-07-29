@@ -1,9 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Menu } from "../components/Pages/Menu/Menu";
+
 import { Cart } from "../components/Pages/Cart/Cart";
 import { Layout } from "../layout/Menu/Layout";
 import { Product } from "../components/Pages/Product/Product";
-
+import { lazy, Suspense } from "react";
+import { Login } from "../components/Pages/Login/Login";
+import { Register } from "../components/Pages/Register/Register";
+import { AuthLayout } from "../layout/Auth/AuthLayout";
+export const Menu = lazy(() => import("../components/Pages/Menu/Menu"));
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -11,10 +15,25 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Menu />,
+        element: (
+          <Suspense fallback={<>Загрузка</>}>
+            <Menu />
+          </Suspense>
+        ),
       },
       { path: "/cart", element: <Cart /> },
-      { path: "/product/:id", element: <Product /> },
+      {
+        path: "/product/:id",
+        element: <Product />,
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      { path: "/auth/login", element: <Login /> },
+      { path: "/auth/register", element: <Register /> },
     ],
   },
 ]);

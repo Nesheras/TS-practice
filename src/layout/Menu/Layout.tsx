@@ -35,7 +35,9 @@ export function Layout() {
             </NavLink>
           </div>
         </div>
-        <Button className={s["exit"]}>Выход</Button>
+        <Button appearence="small" className={s["exit"]}>
+          Выход
+        </Button>
       </div>
       <div className={s.content}>
         <Outlet />
