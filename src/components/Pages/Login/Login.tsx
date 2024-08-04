@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../Button/Button";
 import { Heading } from "../../heading/heading";
 import { Input } from "../../Input/Input";
 import s from "./Login.module.css";
-import { FormEvent, useState } from "react";
-import { BASE_URL } from "../../../API/API";
-import axios from "axios";
+import { FormEvent, useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../Store/store";
+import { login, userActions } from "../../../Store/user.slice";
+
 export type LoginForm = {
   email: {
     value: string;
@@ -15,27 +18,22 @@ export type LoginForm = {
   };
 };
 export function Login() {
-  const [error, setError] = useState<string | undefined>();
-  async function sendLogin(email: string, password: string) {
-    try {
-      const { data } = await axios.post(
-        `${BASE_URL}/pizza-api-demo/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
-      console.log(data);
-      setError(undefined);
-    } catch (e) {
-      if (e instanceof axios.AxiosError) {
-        console.log(e);
-        setError(e.response?.data.message);
-      }
+  const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
+  const jwt = useSelector((s: RootState) => s.user.jwt);
+  const error = useSelector((s: RootState) => s.user.loginState);
+  useEffect(() => {
+    if (jwt) {
+      navigate("/");
     }
+  }, [jwt, navigate]);
+  async function sendLogin(email: string, password: string) {
+    dispatch(login({ email, password }));
   }
   async function submit(e: FormEvent) {
     e.preventDefault();
+    dispatch(userActions.clearLoginError());
     const target = e.target as typeof e.target & LoginForm;
     const { email, password } = target;
     console.log(email.value);
