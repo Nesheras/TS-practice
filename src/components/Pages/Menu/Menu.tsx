@@ -1,26 +1,25 @@
-import { useGetProductsQuery } from "../../../API/API";
-
 import { Heading } from "../../heading/heading";
-import { MenuList } from "../../MenuList/MenuList";
-
+import { ProductCard } from "../../ProductCard/ProductCard";
 import { Search } from "../../Search/Search";
 import s from "./Menu.module.css";
 
-function Menu() {
-  const { data = [], isLoading } = useGetProductsQuery([s]);
-  if (isLoading) {
-    return <div>Загрузка</div>;
-  }
-  console.log(data);
-
+export function Menu() {
   return (
     <>
       <div className={s["head"]}>
-        <Heading>Меню</Heading>
+        <Heading>Заголовок</Heading>
         <Search placeholder="Введите блюдо или состав"></Search>
       </div>
-      <MenuList data={data} />
+      <div>
+        <ProductCard
+          id={1}
+          title="Наслаждение"
+          description="Салями,руккола,помидоры,оливки"
+          price={200}
+          rating={4.5}
+          image="/public/pizza.jpg"
+        />
+      </div>
     </>
   );
 }
-export default Menu;

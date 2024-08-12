@@ -2,6 +2,5 @@ import { InputHTMLAttributes } from "react";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   isValid?: boolean;
-  placeholder?: string;
-  name?: string;
+  plaseholder?: string;
 }
