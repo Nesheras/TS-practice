@@ -32,8 +32,8 @@ export function ProductCard(props: ProductCardProps) {
         </div>
 
         <div className={s["footer"]}>
-          <h2 className={s["title"]}>{props.title}</h2>
-          <p className={s["description"]}>{props.description}</p>
+          <h2 className={s["title"]}>{props.name}</h2>
+          <div className={s["description"]}>{props.ingredients}</div>
         </div>
       </div>
     </Link>
