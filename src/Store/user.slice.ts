@@ -8,6 +8,7 @@ import { RootState } from "./store";
 export interface UsersState {
   jwt: string | null;
   loginState?: string;
+  registerErrorMassage?: string;
   profile?: Profile;
 }
 export interface UserPersistentState {
@@ -17,6 +18,7 @@ export const JWT_PERSISTENT_STATE = "userData";
 const initialState: UsersState = {
   jwt: loadState<UserPersistentState>(JWT_PERSISTENT_STATE)?.jwt ?? null,
   loginState: undefined,
+  registerErrorMassage: undefined,
 };
 export const login = createAsyncThunk(
   "user/login",
@@ -26,6 +28,20 @@ export const login = createAsyncThunk(
       {
         email: params.email,
         password: params.password,
+      }
+    );
+    return data;
+  }
+);
+export const register = createAsyncThunk(
+  "user/register",
+  async (params: { email: string; password: string; name: string }) => {
+    const { data } = await axios.post<LoginResponse>(
+      `${BASE_URL}/pizza-api-demo/auth/register`,
+      {
+        email: params.email,
+        password: params.password,
+        name: params.name,
       }
     );
     return data;
@@ -57,9 +73,15 @@ export const userSlice = createSlice({
     clearLoginError: (state) => {
       state.loginState = undefined;
     },
+    clearRegisterError: (state) => {
+      state.registerErrorMassage = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return;
+      }
       state.jwt = action.payload.access_token;
     }),
       builder.addCase(login.rejected, (state, action) => {
@@ -67,6 +89,15 @@ export const userSlice = createSlice({
       });
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
       state.profile = action.payload;
+    });
+    builder.addCase(register.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return;
+      }
+      state.jwt = action.payload.access_token;
+    });
+    builder.addCase(register.rejected, (state, action) => {
+      state.registerErrorMassage = action.error.message;
     });
   },
 });

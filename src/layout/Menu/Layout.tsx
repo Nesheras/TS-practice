@@ -8,6 +8,7 @@ import { getUserInfo, userActions } from "../../Store/user.slice";
 import { useEffect } from "react";
 
 export function Layout() {
+  const items = useSelector((s: RootState) => s.cart.items);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((s: RootState) => s.user.profile);
@@ -47,7 +48,10 @@ export function Layout() {
                 cn(s["link"], { [s.active]: isActive })
               }
             >
-              Карточка
+              Корзина{" "}
+              <span className={s["cart-count"]}>
+                {items.reduce((acc, el) => acc + el.count, 0)}
+              </span>
             </NavLink>
           </div>
         </div>

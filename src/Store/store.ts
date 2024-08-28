@@ -2,10 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { pizzaApi } from "../API/API";
 import userSlice, { JWT_PERSISTENT_STATE } from "./user.slice";
 import { saveState } from "./storage";
+import cartSlice from "./cart.slice";
 // ...
 
 export const store = configureStore({
-  reducer: { [pizzaApi.reducerPath]: pizzaApi.reducer, user: userSlice },
+  reducer: {
+    [pizzaApi.reducerPath]: pizzaApi.reducer,
+    user: userSlice,
+    cart: cartSlice,
+  },
 
   middleware: (getDefaultMiddlware) =>
     getDefaultMiddlware().concat(pizzaApi.middleware),

@@ -3,6 +3,7 @@
   position: absolute;
   left: 17px;
   top: 17px;
+  cursor: pointer;
 }
 .input {
   font-size: 14px;

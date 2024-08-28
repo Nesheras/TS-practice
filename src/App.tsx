@@ -1,11 +1,10 @@
 import { RouterProvider } from "react-router-dom";
 
 import { router } from "./Router/Router";
-import { useGetProductsQuery } from "./API/API";
+
 import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
-  console.log(useGetProductsQuery);
   return (
     <>
       <ErrorBoundary

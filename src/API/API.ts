@@ -12,7 +12,14 @@ export const pizzaApi = createApi({
     getProductsById: builder.query({
       query: (id) => ({ url: `/pizza-api-demo/products/${id}` }),
     }),
+    getPoductsByName: builder.query({
+      query: (name) => ({ url: `/pizza-api-demo/products?name=${name}` }),
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductsByIdQuery } = pizzaApi;
+export const {
+  useGetProductsQuery,
+  useGetProductsByIdQuery,
+  useGetPoductsByNameQuery,
+} = pizzaApi;

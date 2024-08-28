@@ -1,25 +1,37 @@
-import { useGetProductsQuery } from "../../../API/API";
+import { useState } from "react";
+import { useGetPoductsByNameQuery } from "../../../API/API";
 
 import { Heading } from "../../heading/heading";
 import { MenuList } from "../../MenuList/MenuList";
 
 import { Search } from "../../Search/Search";
 import s from "./Menu.module.css";
+import useDebounce from "../../../helpers/useDebounce";
 
 function Menu() {
-  const { data = [], isLoading } = useGetProductsQuery([s]);
+  const [inner, setInner] = useState<string>("");
+  const debData = useDebounce(inner, 1000);
+  const { data = [], isLoading } = useGetPoductsByNameQuery(debData);
+
   if (isLoading) {
     return <div>Загрузка</div>;
   }
-  console.log(data);
 
   return (
     <>
       <div className={s["head"]}>
         <Heading>Меню</Heading>
-        <Search placeholder="Введите блюдо или состав"></Search>
+        <Search
+          placeholder="Введите блюдо или состав"
+          inner={inner}
+          setInner={setInner}
+        ></Search>
       </div>
-      <MenuList data={data} />
+      {data.length != 0 ? (
+        <MenuList data={data} />
+      ) : (
+        <p>По запросу ничего не найдено</p>
+      )}
     </>
   );
 }
