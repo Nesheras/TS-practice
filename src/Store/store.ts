@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { pizzaApi } from "../API/API";
 import userSlice, { JWT_PERSISTENT_STATE } from "./user.slice";
 import { saveState } from "./storage";
-import cartSlice from "./cart.slice";
+import cartSlice, { CART_PERSISTENT_STATE } from "./cart.slice";
 // ...
 
 export const store = configureStore({
@@ -17,6 +17,7 @@ export const store = configureStore({
 });
 store.subscribe(() => {
   saveState({ jwt: store.getState().user.jwt }, JWT_PERSISTENT_STATE);
+  saveState(store.getState().cart, CART_PERSISTENT_STATE);
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

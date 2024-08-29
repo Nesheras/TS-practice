@@ -48,9 +48,9 @@ export function Layout() {
                 cn(s["link"], { [s.active]: isActive })
               }
             >
-              Корзина{" "}
+              Корзина
               <span className={s["cart-count"]}>
-                {items.reduce((acc, el) => acc + el.count, 0)}
+                {items?.reduce((acc, el) => acc + el.count, 0)}
               </span>
             </NavLink>
           </div>

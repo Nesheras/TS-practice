@@ -27,11 +27,13 @@ function Menu() {
           setInner={setInner}
         ></Search>
       </div>
-      {data.length != 0 ? (
-        <MenuList data={data} />
-      ) : (
-        <p>По запросу ничего не найдено</p>
-      )}
+      <div className={s["body"]}>
+        {data.length != 0 ? (
+          <MenuList data={data} />
+        ) : (
+          <p>По запросу ничего не найдено</p>
+        )}
+      </div>
     </>
   );
 }

@@ -8,7 +8,9 @@ import { Login } from "../components/Pages/Login/Login";
 import { Register } from "../components/Pages/Register/Register";
 import { AuthLayout } from "../layout/Auth/AuthLayout";
 import { RequireAuth } from "../helpers/RequireAuth";
+import { Succes } from "../components/Pages/Succes/Succes";
 export const Menu = lazy(() => import("../components/Pages/Menu/Menu"));
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -30,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <Product />,
+      },
+      {
+        path: "/succes",
+        element: <Succes />,
       },
     ],
   },
